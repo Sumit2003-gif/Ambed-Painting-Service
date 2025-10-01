@@ -51,7 +51,7 @@ const HomeHero = () => {
 
           {/* Content */}
           {index === current && (
-            <div className="relative z-20  h-full flex justify-start px-6  sm:px-10 max-w-7xl mx-auto items-center">
+            <div className="relative z-20 ml-10  h-full flex justify-start px-6  sm:px-10 max-w-7xl mx-auto items-center">
               <motion.div
                 initial={{ opacity: 0, x: -50 }}
                 animate={isInView ? { opacity: 1, x: 0 } : {}}

@@ -70,7 +70,7 @@ const FeaturesSection = () => {
   return (
     <div
       ref={ref}
-      className="bg-[#a87b65] mb-[2%] rounded-b-[35%] py-14 px-5 sm:px-10"
+      className="bg-[#a87b65] hidden lg:block mb-[2%] rounded-b-[35%] py-14 px-5 sm:px-10"
     >
       <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-10 text-white">
         {features.map((feature, index) => (

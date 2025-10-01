@@ -1,6 +1,7 @@
 import React, { useRef } from "react";
 import { FaUserCircle, FaComments } from "react-icons/fa";
 import { motion, useInView } from "framer-motion";
+import { Link } from "react-router-dom";
 
 const HomeLatest = () => {
   const sectionRef = useRef(null);
@@ -44,12 +45,12 @@ const HomeLatest = () => {
     },
   ];
 
-  const BlogCard = ({ image, date, author, commentsCount, title, index }) => (
+  const BlogCard = ({ image, date, author, commentsCount, title, index, id }) => (
     <motion.div
       initial={{ opacity: 0, y: 50 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.5, delay: index * 0.2 }}
-      className="bg-[#f5f1eb] w-full sm:w-[300px] rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300"
+      className="bg-[#f5f1eb] w-full sm:w-[300px] rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 flex flex-col"
     >
       <div className="relative">
         <img src={image} alt={title} className="w-full h-48 object-cover" />
@@ -58,7 +59,7 @@ const HomeLatest = () => {
         </div>
       </div>
 
-      <div className="p-6">
+      <div className="p-6 flex-grow flex flex-col">
         <div className="flex items-center text-[#8c7c72] text-sm mb-3 space-x-3 select-none">
           <div className="flex items-center gap-1">
             <FaUserCircle />
@@ -73,9 +74,17 @@ const HomeLatest = () => {
           </div>
         </div>
 
-        <h3 className="text-xl font-bold text-[#3a322f] leading-snug cursor-pointer hover:text-[#b48b76] transition-colors">
+        <h3 className="text-xl font-bold text-[#3a322f] leading-snug cursor-pointer hover:text-[#b48b76] transition-colors mb-4">
           {title}
         </h3>
+        
+        <div className="mt-auto">
+          <Link to={`/blog/${id}`}>
+            <button className="w-full py-2 px-4 bg-[#b48b76] text-white font-medium rounded-md hover:bg-[#a1745a] transition-colors duration-300">
+              View Blog
+            </button>
+          </Link>
+        </div>
       </div>
     </motion.div>
   );

@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { motion, useInView } from "framer-motion";
 
 const projectData = [
@@ -42,9 +42,38 @@ const FeaturedProjects = () => {
 
   const [hoverBg, setHoverBg] = useState(null);
   const [hoverTitle, setHoverTitle] = useState(null);
+  const [activeProject, setActiveProject] = useState(null);
+  const [isMobile, setIsMobile] = useState(false);
 
   const sectionRef = useRef(null);
   const isInView = useInView(sectionRef, { once: true, amount: 0.2 });
+
+  // Check if mobile on initial load and handle resize
+  useEffect(() => {
+    const checkIsMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    checkIsMobile();
+    window.addEventListener('resize', checkIsMobile);
+    
+    return () => {
+      window.removeEventListener('resize', checkIsMobile);
+    };
+  }, []);
+
+  // Handle project click for mobile
+  const handleProjectClick = (index) => {
+    if (isMobile) {
+      if (activeProject === index) {
+        setActiveProject(null);
+        setHoverBg(null);
+      } else {
+        setActiveProject(index);
+        setHoverBg(projectData[index].hoverImage);
+      }
+    }
+  };
 
   return (
     <section
@@ -67,8 +96,6 @@ const FeaturedProjects = () => {
         Featured Projects
       </motion.h2>
 
-      
-
       {/* Project Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {projectData.map((item, index) => (
@@ -77,18 +104,31 @@ const FeaturedProjects = () => {
             initial={{ opacity: 0, y: 60 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ delay: index * 0.2, duration: 0.6 }}
-            className="group relative h-[400px] bg-black/50 rounded overflow-hidden cursor-pointer transition-all duration-500"
+            className={`group relative h-[400px] bg-black/50 rounded overflow-hidden cursor-pointer transition-all duration-500 ${
+              isMobile && activeProject === index ? 'ring-4 ring-white' : ''
+            }`}
             onMouseEnter={() => {
-              setHoverBg(item.hoverImage);
-              setHoverTitle(item.title);
+              if (!isMobile) {
+                setHoverBg(item.hoverImage);
+                setHoverTitle(item.title);
+              }
             }}
             onMouseLeave={() => {
-              setHoverBg(null);
-              setHoverTitle(null);
+              if (!isMobile) {
+                setHoverBg(null);
+                setHoverTitle(null);
+              }
             }}
+            onClick={() => handleProjectClick(index)}
           >
-            {/* Hover Overlay Content */}
-            <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-all duration-500 p-6 flex flex-col justify-center text-white z-10">
+            {/* Hover/Click Overlay Content */}
+            <div 
+              className={`absolute inset-0 bg-black/60 transition-all duration-500 p-6 flex flex-col justify-center text-white z-10 ${
+                isMobile 
+                  ? activeProject === index ? 'opacity-100' : 'opacity-0' 
+                  : 'opacity-0 group-hover:opacity-100'
+              }`}
+            >
               <p className="text-sm uppercase tracking-wide">{item.subtitle}</p>
               <h3 className="text-xl font-bold mb-3">{item.title}</h3>
               <p className="text-sm mb-4">{item.description}</p>
@@ -98,13 +138,26 @@ const FeaturedProjects = () => {
             </div>
 
             {/* Always-visible bottom label */}
-            <div className="absolute bottom-0 left-0 w-full bg-black/60 text-white p-3 text-center z-20 group-hover:opacity-0 transition-opacity duration-500">
+            <div 
+              className={`absolute bottom-0 left-0 w-full bg-black/60 text-white p-3 text-center z-20 transition-opacity duration-500 ${
+                isMobile 
+                  ? activeProject === index ? 'opacity-0' : 'opacity-100' 
+                  : 'opacity-100 group-hover:opacity-0'
+              }`}
+            >
               <p className="text-xs">{item.subtitle}</p>
               <h4 className="font-bold text-base">{item.title}</h4>
             </div>
           </motion.div>
         ))}
       </div>
+
+      {/* Mobile instructions */}
+      {isMobile && (
+        <div className="text-center text-white text-sm mt-6 relative z-10">
+          <p>Tap on a project to view details</p>
+        </div>
+      )}
     </section>
   );
 };

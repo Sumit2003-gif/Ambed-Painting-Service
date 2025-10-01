@@ -9,7 +9,7 @@ import HomeProcess from '../Components/HomeProcess'
 import HomeLatest from '../Components/HomeLatest'
 const Home = () => {
   return (
-    <div>
+    <div className='overflow-hidden'>
       <HomeHero/>
       <section>
         <FeaturesSection/>
