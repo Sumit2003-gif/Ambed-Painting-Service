@@ -122,7 +122,7 @@ const Introduction = () => {
                 <span className="w-6 h-6 flex items-center justify-center border border-[#a87b65] rounded-full text-[#a87b65] font-bold text-xs">
                   ●
                 </span>
-                <p className="text-gray-800 font-medium">{item}</p>
+                <p className="text-gray-800 text-start font-medium">{item}</p>
               </motion.li>
             ))}
           </motion.ul>
