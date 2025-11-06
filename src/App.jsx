@@ -11,7 +11,7 @@ import ScrollToTop from './Components/ScrollTop'
 
 const App = () => {
   return (
-    <div classname="overflow-hidden">
+    <div classname="overflow-hidden ">
       <ScrollToTop/>
       <Navbar/>
       <Routes>

@@ -86,7 +86,7 @@ const Footer = () => {
               <h2 className="text-2xl font-semibold mb-1">Join Our Newsletter</h2>
               <p className="text-sm">Lorem ipsum dolor amet, elit do eiusmod sed</p>
             </div>
-            <form className="flex w-full max-w-md" onSubmit={(e) => e.preventDefault()}>
+            <form className="flex flex-col gap-4 md:gap-0 md:flex-row  w-full max-w-md" onSubmit={(e) => e.preventDefault()}>
               <input
                 type="email"
                 placeholder="Enter your email"
@@ -95,7 +95,7 @@ const Footer = () => {
               />
               <button
                 type="submit"
-                className="bg-[#3d3230] text-white font-bold px-6 rounded-r-md hover:bg-black transition-colors duration-300 whitespace-nowrap"
+                className="bg-[#3d3230] text-white font-bold px-6 rounded-r-md hover:bg-black transition-colors duration-300 whitespace-nowrap py-3 md:py-0"
               >
                 Subscribe
               </button>
